@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export default function TicTacToe() {
     const [xIsNext, setXIsNext] = useState(true);
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [winningSquares, setWinningSquares] = useState<number[]>([]);
-
 
     function handleClick(i: number) {
         const newSquares = squares.slice();
@@ -33,7 +32,7 @@ export default function TicTacToe() {
             confetti({
                 particleCount: 100,
                 spread: 70,
-                origin: { y: 0.6 }
+                origin: { y: 0.6 },
             });
         }
     }, [winner, line, winningSquares]);
@@ -76,13 +75,13 @@ export default function TicTacToe() {
     }
 
     return (
-        <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100'>
-            <div className='p-8 bg-white rounded-xl shadow-lg'>
-                <h1 className='text-3xl font-bold text-center mb-8 text-blue-600'>Tic Tac Toe</h1>
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
+            <div className="rounded-xl bg-white p-8 shadow-lg">
+                <h1 className="mb-8 text-center text-3xl font-bold text-blue-600">Tic Tac Toe</h1>
 
-                <div className='text-2xl text-center mb-4 text-gray-600'>{status}</div>
+                <div className="mb-4 text-center text-2xl text-gray-600">{status}</div>
 
-                <div className='grid grid-cols-3 gap-2 mb-4'>
+                <div className="mb-4 grid grid-cols-3 gap-2">
                     {squares.map((square, index) => (
                         <Square
                             key={index}
@@ -95,7 +94,7 @@ export default function TicTacToe() {
 
                 <motion.button
                     onClick={resetGame}
-                    className='w-full py-2 bg-blue-500 text-white rounded-lg font-bold hover:bg-blue-600 transition-colors'
+                    className="w-full rounded-lg bg-blue-500 py-2 font-bold text-white transition-colors hover:bg-blue-600"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                 >
@@ -106,22 +105,22 @@ export default function TicTacToe() {
     );
 }
 
-function Square({ value, onSquareClick, isWinning }: { value: string | null, onSquareClick: () => void, isWinning?: boolean }) {
+function Square({ value, onSquareClick, isWinning }: { value: string | null; onSquareClick: () => void; isWinning?: boolean }) {
     return (
         <motion.button
             onClick={onSquareClick}
-            className={`border-2 border-blue-500 h-20 w-20 flex items-center justify-center text-3xl font-bold cursor-pointer transition-all duration-200 ${isWinning ? 'bg-green-200 border-green-500' : 'hover:bg-blue-100'}`}
+            className={`flex h-20 w-20 cursor-pointer items-center justify-center border-2 border-blue-500 text-3xl font-bold transition-all duration-200 ${isWinning ? 'border-green-500 bg-green-200' : 'hover:bg-blue-100'}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
         >
-            <AnimatePresence mode='wait'>
+            <AnimatePresence mode="wait">
                 {value && (
                     <motion.span
                         key={value}
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0, opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     >
                         {value}
                     </motion.span>
